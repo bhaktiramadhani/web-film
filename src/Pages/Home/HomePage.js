@@ -1,26 +1,12 @@
-import { Search } from "@mui/icons-material";
-import {
-  Box,
-  InputAdornment,
-  TextField,
-  ThemeProvider,
-  Typography,
-} from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { Box, ThemeProvider, Typography } from "@mui/material";
+import React from "react";
 import theme from "../../theme";
-import { getMovieList } from "../../utils/api";
-import BottomMenu from "./BottomMenu";
+import BottomMenu from "../../components/BottomMenu";
 import HeroCard from "./HeroCard";
 import MovieMenu from "./MovieMenu";
+import SearchField from "../../components/SearchField";
 
-const HomePage = () => {
-  const [movieLists, setMovieLists] = useState([]);
-
-  useEffect(() => {
-    getMovieList().then((movie) => {
-      setMovieLists(movie);
-    });
-  }, []);
+const HomePage = ({ movieLists }) => {
   return (
     <ThemeProvider theme={theme}>
       <Box>
@@ -44,25 +30,7 @@ const HomePage = () => {
           >
             What do you want to watch?
           </Typography>
-          <TextField
-            label="Search"
-            variant="outlined"
-            color="secondary"
-            sx={{
-              mx: "24px",
-              ".MuiInputBase-root": {
-                borderRadius: "16px",
-                backgroundColor: theme.palette.background.input,
-              },
-            }}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="start" color="secondary.contrastText">
-                  <Search />
-                </InputAdornment>
-              ),
-            }}
-          />
+          <SearchField />
         </Box>
         <HeroCard movieLists={movieLists} />
         <MovieMenu movieLists={movieLists} />
